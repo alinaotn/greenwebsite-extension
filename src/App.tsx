@@ -3,9 +3,11 @@ import logo from './icons/logo.svg';
 import close from './icons/close.svg';
 import './App.css';
 import {DOMMessage, DOMMessageResponse} from "./types";
+import {Score} from "./components/Score";
 
 function App() {
   const [title, setTitle] = React.useState('');
+  const [url, setUrl] = React.useState('');
 
   React.useEffect(() => {
     /**
@@ -23,28 +25,33 @@ function App() {
        * The runtime.onMessage event is fired in each content script running
        * in the specified tab for the current extension.
        */
-
+      console.log(tabs);
       chrome.tabs.sendMessage(
         tabs[0].id || 0,
         {type: 'GET_DOM'} as DOMMessage,
         (response: DOMMessageResponse) => {
-          console.log(response);
           setTitle(response.title);
+          setUrl(response.url);
         });
     });
   });
 
   return (
-    <div className="bg-lightblue w-screen h-screen p-1.5">
-      <header className="flex flex-row justify-center h-1/4">
+    <div className="bg-lightblue px-1.5 py-2.5">
+      <header className="flex flex-row justify-center items-center h-auto">
         <img className="w-8 h-8" src={logo} alt="logo"/>
-        <p className="text-xl text-green font-semibold px-1.5 text-center">
-          Wie grün ist {title}?
+        <p className="w-full text-xl text-green font-semibold px-1.5 text-center">
+          Wie grün ist diese Website?
         </p>
         <img className="w-8 h-8" src={close} alt="logo"/>
       </header>
-      <div className="h-2/4">
+      <div className="h-1/4">
+        <p className="w-full text-xl text-green font-semibold text-center">
+         title: {title}
+          url: {url}
+        </p>
       </div>
+      <div className="h-2/4 bg-white"><Score/></div>
     </div>
   );
 }
