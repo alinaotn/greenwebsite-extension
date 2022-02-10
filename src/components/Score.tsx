@@ -1,5 +1,5 @@
 import React, {FC, ReactElement} from 'react';
-import { ArcGauge, ArcGaugeProps } from "@progress/kendo-react-gauges";
+import GaugeChart from 'react-gauge-chart';
 
 interface ScoreProps {
   min?: number;
@@ -10,37 +10,14 @@ interface ScoreProps {
 export const Score: FC<ScoreProps> = ({min = 0, max = 100, steps}): ReactElement => {
   const [value, setValue] = React.useState(0);
 
-  const colors = [
-    {
-      to: 33,
-      color: "#D09887",
-    },
-    {
-      from: 33,
-      to: 66,
-      color: "#F0C97F",
-    },
-    {
-      from: 66,
-      color: "#67837E",
-    },
-  ];
-
   React.useEffect(() => {
-      setValue(90);
+    setValue(90);
   }, []);
 
-  const arcOptions: ArcGaugeProps = {
-    value: value,
-    colors,
-    color: '#000',
-    transitions: false,
-  };
-
   return (
-    <div className="bg-lightblue w-screen h-screen px-1.5 py-2.5">
-      Score
-      <ArcGauge {...arcOptions}   />
+    <div className="relative bg-lightblue w-screen h-screen overflow-hidden px-1.5 py-2.5">
+      <span className="absolute top-52 left-44 text-7xl font-bold text-green" style={{width: "100%", height: "100%"}}>{value}</span>
+      <GaugeChart hideText colors={['#D09887', '#F0C97F', '#759051']} cornerRadius={10} needleColor="#9FB1BA" needleBaseColor="#9FB1BA" arcPadding={0.015}/>
     </div>
   );
 }
