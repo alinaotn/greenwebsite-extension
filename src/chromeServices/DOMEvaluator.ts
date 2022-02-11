@@ -14,7 +14,8 @@ const messagesFromReactAppListener = (
     // Prepare the response object with information about the site
     const response: DOMMessageResponse = {
         title: document.title,
-        headlines
+        headlines,
+        url: document.URL,
     };
 
     sendResponse(response);

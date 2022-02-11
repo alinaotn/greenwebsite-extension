@@ -11,6 +11,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   width: 28.125rem;
   height: 34.375rem;
+  background-color: #ECEFF1;
 }
 
 code {
