@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.4.3",
-    "@progress/kendo-react-gauges": "^5.0.1",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
@@ -44,11 +43,10 @@
     ]
   },
   "devDependencies": {
+    "@tailwindcss/postcss7-compat": "^2.2.17",
     "@types/chrome": "0.0.178",
-    "@types/react-gauge-chart": "^0.3.1",
     "autoprefixer": "^10.4.2",
-    "postcss": "^8.4.5",
-    "react-gauge-chart": "^0.4.0",
-    "tailwindcss": "^3.0.18"
+    "tailwindcss": "^3.0.18",
+    "postcss": "^8.4.6"
   }
 }

@@ -43,6 +43,7 @@ function App() {
         <img className="w-8 h-8" src={logo} alt="logo"/>
         <p className="w-full text-xl text-green font-semibold px-1.5 text-center">
           Wie grün ist diese Website?
+          {url} {title}
         </p>
         <img className="w-8 h-8 cursor-pointer" src={close} alt="logo" onClick={() => window.close()}/>
       </header>
@@ -50,7 +51,7 @@ function App() {
         <p className="w-full text-xl text-green font-semibold text-center">
         </p>
       </div>
-      <div className="h-2/4 bg-white"><Score/></div>
+      <div className="h-2/4"><Score/></div>
     </div>
   );
 }
