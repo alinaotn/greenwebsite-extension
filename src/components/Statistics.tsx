@@ -17,7 +17,7 @@ export const Statistics: FC<StatisticsProps> = ({values}): ReactElement => {
   useEffect(() => {
     let timeout: any;
     if (loading) {
-      timeout = setTimeout(() => setLoading(false), 1000);
+      timeout = setTimeout(() => setLoading(false), 2000);
     }
     return () => clearTimeout(timeout);
   }, [loading]);
