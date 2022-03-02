@@ -4,6 +4,35 @@ import close from './icons/close.svg';
 import './App.css';
 import {DOMMessage, DOMMessageResponse} from "./types";
 import {Score} from "./components/Score";
+import {Statistics} from "./components/Statistics";
+
+type StatisticValues = {
+  name: string;
+  value: number;
+}
+
+const statisticValues: StatisticValues[] = [
+  {
+    name: 'Green Hosting',
+    value: 100
+  },
+  {
+    name: 'Page Speed',
+    value: 20
+  },
+  {
+    name: 'HTTP Requests',
+    value: 40
+  },
+  {
+    name: 'MozRank',
+    value: 20
+  },
+  {
+    name: 'Responsiveness',
+    value: 40
+  },
+]
 
 function App() {
   const [title, setTitle] = React.useState('');
@@ -36,7 +65,6 @@ function App() {
     });
   });
 
-
   return (
     <div className="bg-lightblue px-1.5 py-2.5 overflow-hidden">
       <header className="flex flex-row justify-center items-center h-auto">
@@ -47,11 +75,8 @@ function App() {
         </p>
         <img className="w-8 h-8 cursor-pointer" src={close} alt="logo" onClick={() => window.close()}/>
       </header>
-      <div className="h-1/4">
-        <p className="w-full text-xl text-green font-semibold text-center">
-        </p>
-      </div>
       <div className="h-2/4"><Score/></div>
+      <div className="h-72 w-96 mx-6 rounded-medium bg-offwhite"><Statistics values={statisticValues}/></div>
     </div>
   );
 }
