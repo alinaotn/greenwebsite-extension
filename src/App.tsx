@@ -11,32 +11,11 @@ type StatisticValues = {
   value: number;
 }
 
-const statisticValues: StatisticValues[] = [
-  {
-    name: 'Green Hosting',
-    value: 100
-  },
-  {
-    name: 'Page Speed',
-    value: 20
-  },
-  {
-    name: 'HTTP Requests',
-    value: 40
-  },
-  {
-    name: 'MozRank',
-    value: 20
-  },
-  {
-    name: 'Responsiveness',
-    value: 40
-  },
-]
-
 function App() {
   const [title, setTitle] = React.useState('');
   const [url, setUrl] = React.useState('');
+  const [domain, setDomain] = React.useState('');
+  const [greenHosting, setGreenHosting] = React.useState(false);
 
   React.useEffect(() => {
     /**
@@ -61,9 +40,48 @@ function App() {
         (response: DOMMessageResponse) => {
           setTitle(response.title);
           setUrl(response.url);
+          if (url) {
+            const newUrl = new URL(url);
+            setDomain(newUrl.hostname);
+          }
         });
     });
   });
+
+
+  React.useEffect(() => {
+    fetch(`https://admin.thegreenwebfoundation.org/api/v3/greencheck/${domain}`)
+      .then(response => response.json())
+      .then(data => {
+        setGreenHosting(data.green);
+        console.log(data)
+      });
+
+  }, [domain]);
+
+
+  const statisticValues: StatisticValues[] = [
+    {
+      name: 'Green Hosting',
+      value: greenHosting ? 100 : 5
+    },
+    {
+      name: 'Page Speed',
+      value: 20
+    },
+    {
+      name: 'HTTP Requests',
+      value: 40
+    },
+    {
+      name: 'MozRank',
+      value: 20
+    },
+    {
+      name: 'Responsiveness',
+      value: 40
+    },
+  ]
 
   return (
     <div className="bg-lightblue px-1.5 py-2.5 overflow-hidden">

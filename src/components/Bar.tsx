@@ -20,9 +20,7 @@ export const Bar: FC<BarProps> = ({value}): ReactElement => {
   }, [value])
 
   function calculateWidth(value: number) {
-    const w = (368 * value) / 100;
-    console.log(w);
-    return w;
+    return (368 * value) / 100;
   }
 
   return (
