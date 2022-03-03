@@ -16,6 +16,7 @@ function App() {
   const [url, setUrl] = React.useState('');
   const [domain, setDomain] = React.useState('');
   const [greenHosting, setGreenHosting] = React.useState(false);
+  const [mozRank, setMozRank] = React.useState(0);
 
   React.useEffect(() => {
     /**
@@ -59,6 +60,10 @@ function App() {
 
   }, [domain]);
 
+  React.useEffect(() => {
+    setMozRank(Math.floor(Math.random() * (100 - 1 + 1)) + 1);
+  }, []);
+
 
   const statisticValues: StatisticValues[] = [
     {
@@ -75,7 +80,7 @@ function App() {
     },
     {
       name: 'MozRank',
-      value: 20
+      value: mozRank
     },
     {
       name: 'Responsiveness',
