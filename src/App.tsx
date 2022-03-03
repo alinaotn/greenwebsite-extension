@@ -17,7 +17,7 @@ function App() {
   const [encodedUrl, setEncodedUrl] = React.useState('https%3A%2F%2Falinao.uber.space%2F');
   const [domain, setDomain] = React.useState('');
   const [greenHosting, setGreenHosting] = React.useState(false);
-  const [pageSpeed, setPageSpeed] = React.useState('');
+  const [pageSpeed, setPageSpeed] = React.useState(0);
   const [mobile, setMobile] = React.useState(0);
 
   //TODO wait for response to fetch
@@ -72,7 +72,8 @@ function App() {
       .then(response => response.json())
       .then(data => {
         setMobile(data.lighthouseResult.audits.viewport.score);
-        console.log(data)
+        setPageSpeed(data.lighthouseResult.audits['speed-index'].score);
+        console.log(data);
       });
   }, []);
 
@@ -83,7 +84,7 @@ function App() {
     },
     {
       name: 'Page Speed',
-      value: 20
+      value: pageSpeed === 0 ? 1 : pageSpeed * 100
     },
     {
       name: 'HTTP Requests',
