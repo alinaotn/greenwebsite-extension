@@ -14,9 +14,13 @@ type StatisticValues = {
 function App() {
   const [title, setTitle] = React.useState('');
   const [url, setUrl] = React.useState('');
+  const [encodedUrl, setEncodedUrl] = React.useState('https%3A%2F%2Falinao.uber.space%2F');
   const [domain, setDomain] = React.useState('');
   const [greenHosting, setGreenHosting] = React.useState(false);
+  const [pageSpeed, setPageSpeed] = React.useState('');
+  const [mobile, setMobile] = React.useState(0);
 
+  //TODO wait for response to fetch
   React.useEffect(() => {
     /**
      * We can't use "chrome.runtime.sendMessage" for sending messages from React.
@@ -43,11 +47,11 @@ function App() {
           if (url) {
             const newUrl = new URL(url);
             setDomain(newUrl.hostname);
+            setEncodedUrl(encodeURIComponent(url));
           }
         });
     });
   });
-
 
   React.useEffect(() => {
     fetch(`https://admin.thegreenwebfoundation.org/api/v3/greencheck/${domain}`)
@@ -59,6 +63,18 @@ function App() {
 
   }, [domain]);
 
+  React.useEffect(() => {
+    fetch(`https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodedUrl}&key=AIzaSyAtebrMwOKZT0CJ6zB0QHd_Ts0f6fE0Ko0`, {
+      headers: {
+        'Accept': `application/json`,
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        setMobile(data.lighthouseResult.audits.viewport.score);
+        console.log(data)
+      });
+  }, []);
 
   const statisticValues: StatisticValues[] = [
     {
@@ -79,7 +95,7 @@ function App() {
     },
     {
       name: 'Responsiveness',
-      value: 40
+      value: mobile === 0 ? 1 : mobile * 100
     },
   ]
 
