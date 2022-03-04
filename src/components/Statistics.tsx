@@ -1,6 +1,7 @@
 import React, {FC, ReactElement, useEffect} from 'react';
-import {Bar} from "./Bar";
+// import {Bar} from "./Bar";
 import {ClipLoader} from "react-spinners";
+import {Badge} from "./Badge";
 
 type StatisticValues = {
   name: string;
@@ -32,9 +33,10 @@ export const Statistics: FC<StatisticsProps> = ({values, spinnerLoading}): React
         </div> :
         <div className="bg-offwhite mt-8 overflow-hidden flex flex-col justify-center p-2">
           {values && values.map((v, index) =>
-            <div key={index} className="mb-4">
-              <span className="text-green text-base">{v.name}</span>
-              <Bar value={v.value}/>
+            <div key={index} className="mb-5">
+              {/*<span className="text-green text-base">{v.name}</span>*/}
+              {/*<Bar value={v.value}/>*/}
+              <Badge value={v.value} name={v.name}/>
             </div>
           )}
         </div>}

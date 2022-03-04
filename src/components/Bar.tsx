@@ -17,6 +17,7 @@ export const Bar: FC<BarProps> = ({value}): ReactElement => {
       setColor('bg-green');
     }
     setWidth(calculateWidth(value));
+    console.log(value);
   }, [value])
 
   function calculateWidth(value: number) {

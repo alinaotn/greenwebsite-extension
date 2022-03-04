@@ -56,6 +56,8 @@ function App() {
     })
   });
 
+
+  //TODO check numeric values for red, orange, green ranking
   const statisticValues: StatisticValues[] = [
     {
       name: 'Green Hosting',
@@ -63,7 +65,7 @@ function App() {
     },
     {
       name: 'Page Speed',
-      value: pageSpeed === 0 ? 1 : pageSpeed * 100
+      value: pageSpeed === 0 ? 5 : pageSpeed * 100
     },
     {
       name: 'HTTP Requests',
@@ -75,7 +77,7 @@ function App() {
     },
     {
       name: 'Responsiveness',
-      value: mobile === 0 ? 1 : mobile * 100
+      value: mobile === 0 ? 5 : mobile * 100
     },
   ]
 
@@ -86,9 +88,9 @@ function App() {
         <p className="w-full text-xl text-green font-semibold px-1.5 text-center">
           Wie grün ist diese Website?
         </p>
-        <img className="w-8 h-8 cursor-pointer" src={close} alt="logo" onClick={() => window.close()}/>
+        <img className="w-8 h-8 cursor-pointer" src={close} alt="close" onClick={() => window.close()}/>
       </header>
-      <div className="h-2/4"><Score/></div>
+      <div className="h-2/4">{!spinnerLoading && <Score/>}</div>
       <div className="h-72 w-96 mx-6 rounded-medium bg-offwhite">
         <Statistics values={statisticValues} spinnerLoading={spinnerLoading}/></div>
     </div>
