@@ -9,11 +9,13 @@ type StatisticValues = {
 
 interface StatisticsProps {
   values?: StatisticValues[];
+  spinnerLoading?: boolean;
 }
 
-export const Statistics: FC<StatisticsProps> = ({values}): ReactElement => {
+export const Statistics: FC<StatisticsProps> = ({values, spinnerLoading}): ReactElement => {
   const [loading, setLoading] = React.useState(true);
 
+  //TODO remove loadingState if not needed or use as fallback
   useEffect(() => {
     let timeout: any;
     if (loading) {
@@ -24,9 +26,9 @@ export const Statistics: FC<StatisticsProps> = ({values}): ReactElement => {
 
   return (
     <>
-      {loading ?
+      {spinnerLoading ?
         <div className="flex justify-center items-center h-full">
-          <ClipLoader color="#67837E" loading={loading} size={100}/>
+          <ClipLoader color="#67837E" loading={spinnerLoading} size={100}/>
         </div> :
         <div className="bg-offwhite mt-8 overflow-hidden flex flex-col justify-center p-2">
           {values && values.map((v, index) =>

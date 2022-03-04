@@ -12,70 +12,49 @@ type StatisticValues = {
 }
 
 function App() {
-  const [title, setTitle] = React.useState('');
   const [url, setUrl] = React.useState('');
   const [encodedUrl, setEncodedUrl] = React.useState('https%3A%2F%2Falinao.uber.space%2F');
   const [domain, setDomain] = React.useState('');
   const [greenHosting, setGreenHosting] = React.useState(false);
   const [pageSpeed, setPageSpeed] = React.useState(0);
   const [mobile, setMobile] = React.useState(0);
+  const [httpRequests, setHttpRequests] = React.useState(0);
+  const [spinnerLoading, setSpinnerLoading] = React.useState(true);
 
-  //TODO wait for response to fetch
-  React.useEffect(() => {
-    /**
-     * We can't use "chrome.runtime.sendMessage" for sending messages from React.
-     * For sending messages from React we need to specify which tab to send it to.
-     */
+  function getBrowserTabs() {
     chrome.tabs && chrome.tabs.query({
       active: true,
       currentWindow: true
     }, tabs => {
-      /**
-       * Sends a single message to the content script(s) in the specified tab,
-       * with an optional callback to run when a response is sent back.
-       *
-       * The runtime.onMessage event is fired in each content script running
-       * in the specified tab for the current extension.
-       */
-      console.log(tabs);
       chrome.tabs.sendMessage(
         tabs[0].id || 0,
         {type: 'GET_DOM'} as DOMMessage,
-        (response: DOMMessageResponse) => {
-          setTitle(response.title);
-          setUrl(response.url);
+        async (response: DOMMessageResponse) => {
+          await setUrl(response.url);
           if (url) {
             const newUrl = new URL(url);
-            setDomain(newUrl.hostname);
-            setEncodedUrl(encodeURIComponent(url));
+            await setDomain(newUrl.hostname);
+            await setEncodedUrl(encodeURIComponent(url));
           }
         });
     });
-  });
+  }
+
+  const fetchJson = async (apiURL: string) => {
+    const response = await fetch(apiURL);
+    return response.json();
+  };
 
   React.useEffect(() => {
-    fetch(`https://admin.thegreenwebfoundation.org/api/v3/greencheck/${domain}`)
-      .then(response => response.json())
-      .then(data => {
-        setGreenHosting(data.green);
-        console.log(data)
-      });
-
-  }, [domain]);
-
-  React.useEffect(() => {
-    fetch(`https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodedUrl}&key=AIzaSyAtebrMwOKZT0CJ6zB0QHd_Ts0f6fE0Ko0`, {
-      headers: {
-        'Accept': `application/json`,
-      }
+    getBrowserTabs();
+    fetchJson(`https://admin.thegreenwebfoundation.org/api/v3/greencheck/${domain}`).then((data) => setGreenHosting(data.green));
+    fetchJson(`https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodedUrl}&key=AIzaSyAtebrMwOKZT0CJ6zB0QHd_Ts0f6fE0Ko0`).then((data) => {
+      setMobile(data.lighthouseResult.audits.viewport.score);
+      setPageSpeed(data.lighthouseResult.audits['speed-index'].score);
+      setHttpRequests(data.lighthouseResult.audits['network-requests'].details.items.length);
+      setSpinnerLoading(false);
     })
-      .then(response => response.json())
-      .then(data => {
-        setMobile(data.lighthouseResult.audits.viewport.score);
-        setPageSpeed(data.lighthouseResult.audits['speed-index'].score);
-        console.log(data);
-      });
-  }, []);
+  });
 
   const statisticValues: StatisticValues[] = [
     {
@@ -88,7 +67,7 @@ function App() {
     },
     {
       name: 'HTTP Requests',
-      value: 40
+      value: httpRequests
     },
     {
       name: 'MozRank',
@@ -106,12 +85,12 @@ function App() {
         <img className="w-8 h-8" src={logo} alt="logo"/>
         <p className="w-full text-xl text-green font-semibold px-1.5 text-center">
           Wie grün ist diese Website?
-          {url} {title}
         </p>
         <img className="w-8 h-8 cursor-pointer" src={close} alt="logo" onClick={() => window.close()}/>
       </header>
       <div className="h-2/4"><Score/></div>
-      <div className="h-72 w-96 mx-6 rounded-medium bg-offwhite"><Statistics values={statisticValues}/></div>
+      <div className="h-72 w-96 mx-6 rounded-medium bg-offwhite">
+        <Statistics values={statisticValues} spinnerLoading={spinnerLoading}/></div>
     </div>
   );
 }
