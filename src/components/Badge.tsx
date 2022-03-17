@@ -32,7 +32,7 @@ export const Badge: FC<BadgeProps> = ({value, name}): ReactElement => {
     <div className={`border-2 ${borderColor} h-10 flex items-center rounded-medium w-fit`}>
       <span className={`${textColor} pl-2 pr-2`}>{name}</span>
       <div className="mr-2">
-        <InfoIcon color={hexColor} width="20px" height="20spx"/></div>
+        <InfoIcon color={hexColor} width="20px" height="20px"/></div>
     </div>
   );
 }

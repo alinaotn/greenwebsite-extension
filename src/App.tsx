@@ -20,8 +20,9 @@ function App() {
   const [mobile, setMobile] = React.useState(0);
   const [httpRequests, setHttpRequests] = React.useState(0);
   const [spinnerLoading, setSpinnerLoading] = React.useState(true);
+  const [scoreValue, setScoreValue] = React.useState(0);
 
-  function getBrowserTabs() {
+  const getBrowserTabs = () => {
     chrome.tabs && chrome.tabs.query({
       active: true,
       currentWindow: true
@@ -40,6 +41,7 @@ function App() {
     });
   }
 
+
   const fetchJson = async (apiURL: string) => {
     const response = await fetch(apiURL);
     return response.json();
@@ -52,10 +54,10 @@ function App() {
       setMobile(data.lighthouseResult.audits.viewport.score);
       setPageSpeed(data.lighthouseResult.audits['speed-index'].score);
       setHttpRequests(data.lighthouseResult.audits['network-requests'].details.items.length);
+      calculateScore();
       setSpinnerLoading(false);
     })
   });
-
 
   //TODO check numeric values for red, orange, green ranking
   const statisticValues: StatisticValues[] = [
@@ -81,6 +83,15 @@ function App() {
     },
   ]
 
+  const calculateScore = async () => {
+    let value = 0;
+    await statisticValues.forEach((item) => {
+      value += item.value;
+    })
+
+    setScoreValue(Math.round(value / 5));
+  }
+
   return (
     <div className="bg-lightblue px-1.5 py-2.5 overflow-hidden">
       <header className="flex flex-row justify-center items-center h-auto">
@@ -90,7 +101,7 @@ function App() {
         </p>
         <img className="w-8 h-8 cursor-pointer" src={close} alt="close" onClick={() => window.close()}/>
       </header>
-      <div className="h-2/4">{!spinnerLoading && <Score/>}</div>
+      <div className="h-2/4">{!spinnerLoading && <Score value={scoreValue}/>}</div>
       <div className="h-72 w-96 mx-6 rounded-medium bg-offwhite">
         <Statistics values={statisticValues} spinnerLoading={spinnerLoading}/></div>
     </div>

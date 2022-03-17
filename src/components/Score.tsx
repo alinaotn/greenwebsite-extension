@@ -1,16 +1,11 @@
 import React, {FC, ReactElement} from 'react';
 
 interface ScoreProps {
+  value: number;
   max?: number;
 }
 
-export const Score: FC<ScoreProps> = ({ max = 100}): ReactElement => {
-  const [value, setValue] = React.useState(0);
-
-  React.useEffect(() => {
-    setValue(20);
-  }, []);
-
+export const Score: FC<ScoreProps> = ({ value, max = 100}): ReactElement => {
   return (
     <div className="bg-lightblue mt-2 overflow-hidden flex flex-col justify-center items-center">
       <span className="text-8xl font-bold text-red">{value}</span>
