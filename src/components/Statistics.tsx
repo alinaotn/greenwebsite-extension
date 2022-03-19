@@ -31,7 +31,7 @@ export const Statistics: FC<StatisticsProps> = ({values, spinnerLoading}): React
         <div className="flex justify-center items-center h-full">
           <ClipLoader color="#67837E" loading={spinnerLoading} size={100}/>
         </div> :
-        <div className="bg-offwhite mt-8 overflow-hidden flex flex-col justify-center p-2">
+        <div className="overflow-hidden flex flex-col justify-center">
           {values && values.map((v, index) =>
             <div key={index} className="mb-5">
               {/*<span className="text-green text-base">{v.name}</span>*/}

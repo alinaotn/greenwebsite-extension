@@ -12,12 +12,26 @@ module.exports = {
       'lightgreen': '#759051',
       'red': '#D09887',
       'yellow': '#F0C97F',
+      'dark-green': '#0C3B2E',
+      'mint': '#E2F0DA',
     },
     borderRadius: {
       'medium': '10px',
       'large': '25px',
     },
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'hero-pattern': "url('/public/background.svg')",
+      },
+      width: {
+        '320': '320px',
+        '400': '400px',
+        '450': '450px',
+      },
+      height: {
+        '550': '550px',
+      }
+    },
   },
   plugins: [],
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './icons/logo.svg';
 import close from './icons/close.svg';
 import './App.css';
 import {DOMMessage, DOMMessageResponse} from "./types";
@@ -74,10 +73,6 @@ function App() {
       value: httpRequests
     },
     {
-      name: 'MozRank',
-      value: 20
-    },
-    {
       name: 'Responsiveness',
       value: mobile === 0 ? 5 : mobile * 100
     },
@@ -93,17 +88,17 @@ function App() {
   }
 
   return (
-    <div className="bg-lightblue px-1.5 py-2.5 overflow-hidden">
-      <header className="flex flex-row justify-center items-center h-auto">
-        <img className="w-8 h-8" src={logo} alt="logo"/>
-        <p className="w-full text-xl text-green font-semibold px-1.5 text-center">
-          Wie grün ist diese Website?
+    <div className="bg-hero-pattern px-6 py-5 overflow-hidden flex flex-col justify-center w-450 h-550 gap-7">
+      <header className="flex flex-row justify-between items-center h-auto">
+        <p className=" text-2xl text-dark-green font-semibold px-1.5 text-center">
+         How green is this Website?
         </p>
         <img className="w-8 h-8 cursor-pointer" src={close} alt="close" onClick={() => window.close()}/>
       </header>
-      <div className="h-2/4">{!spinnerLoading && <Score value={scoreValue}/>}</div>
-      <div className="h-72 w-96 mx-6 rounded-medium bg-offwhite">
+      <div className="">{!spinnerLoading && <Score value={scoreValue}/>}</div>
+      <div className="rounded-medium">
         <Statistics values={statisticValues} spinnerLoading={spinnerLoading}/></div>
+      <div className="text-dark-green">Learn more: www.greenwebsite.com</div>
     </div>
   );
 }
