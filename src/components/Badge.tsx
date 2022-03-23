@@ -1,5 +1,6 @@
 import React, {FC, ReactElement} from 'react';
-import InfoIcon from "./InfoIcon";
+import plus from "../icons/plus.svg";
+import like from "../icons/like.svg";
 
 interface BadgeProps {
   value: number;
@@ -29,10 +30,14 @@ export const Badge: FC<BadgeProps> = ({value, name}): ReactElement => {
 
 
   return (
-    <div className={`border-2 ${borderColor} h-10 flex items-center rounded-medium w-fit`}>
-      <span className={`${textColor} pl-2 pr-2`}>{name}</span>
-      <div className="mr-2">
-        <InfoIcon color={hexColor} width="20px" height="20px"/></div>
+    <div className={`bg-mint h-11 flex items-center rounded-medium w-400`}>
+      <div className="ml-4 mr-4">
+        <img className="w-8 h-8 cursor-pointer" src={plus} alt="plus"/>
+      </div>
+      <span className={`text-dark-green text-lg w-320`}>{name}</span>
+      <div className="ml-4 mr-4">
+        <img className="w-8 h-8" src={like} alt="like"/>
+      </div>
     </div>
   );
 }
