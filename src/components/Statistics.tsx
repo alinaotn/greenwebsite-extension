@@ -4,6 +4,7 @@ import {Badge} from "./Badge";
 type StatisticValues = {
   name: string;
   value: number;
+  content: string;
 }
 
 interface StatisticsProps {
@@ -15,7 +16,7 @@ export const Statistics: FC<StatisticsProps> = ({values}): ReactElement => {
     <div className="overflow-hidden flex flex-col justify-center">
       {values && values.map((v, index) =>
         <div key={index} className="mb-5">
-          <Badge value={v.value} name={v.name}/>
+          <Badge value={v.value} name={v.name} content={v.content}/>
         </div>
       )}
     </div>

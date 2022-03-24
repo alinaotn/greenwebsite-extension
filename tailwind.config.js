@@ -24,12 +24,26 @@ module.exports = {
         'hero-pattern': "url('/public/background.svg')",
       },
       width: {
+        '130': '130px',
+        '135': '135px',
         '320': '320px',
         '400': '400px',
         '450': '450px',
       },
       height: {
+        '130': '130px',
+        '135': '135px',
         '550': '550px',
+        '250': '250px',
+      },
+      margin: {
+        '60px': '60px',
+      },
+      borderRadius: {
+        '50': '50%',
+      },
+      borderWidth: {
+        '3': '3px',
       }
     },
   },

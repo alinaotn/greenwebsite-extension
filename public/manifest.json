@@ -1,5 +1,5 @@
 {
-  "name": "Green Website Extension",
+  "name": "Green Website Check",
   "description": "Browser extension that scores the sustainability of a website!",
   "version": "1.0",
   "manifest_version": 3,
@@ -8,9 +8,9 @@
     "default_title": "Open the popup"
   },
   "icons": {
-    "16": "logo192.png",
-    "48": "logo192.png",
-    "128": "logo192.png"
+    "16": "Icon.png",
+    "48": "Icon.png",
+    "128": "Icon.png"
   },
   "permissions": [
     "activeTab"

@@ -9,24 +9,30 @@ import {ClipLoader} from "react-spinners";
 type StatisticValues = {
   name: string;
   value: number;
+  content: string;
 }
 
 let statisticValues: StatisticValues[] = [
   {
     name: 'Green Hosting',
-    value: 0
+    value: 0,
+    content: 'Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. ',
   },
   {
     name: 'Page Speed',
-    value: 0
+    value: 0,
+    content: 'Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. ',
+
   },
   {
     name: 'HTTP Requests',
-    value: 0
+    value: 0,
+    content: 'Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. '
   },
   {
     name: 'Responsiveness',
-    value: 0
+    value: 0,
+    content: 'Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. '
   },
 ]
 
@@ -68,27 +74,24 @@ function App() {
 
   React.useEffect(() => {
     getBrowserTabs();
-    fetchJson(`https://admin.thegreenwebfoundation.org/api/v3/greencheck/${domain}`).then((data) => {setGreenHosting(data.green); console.log('g',data.green)});
+    fetchJson(`https://admin.thegreenwebfoundation.org/api/v3/greencheck/${domain}`).then((data) => setGreenHosting(data.green));
     fetchJson(`https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodedUrl}&key=AIzaSyAtebrMwOKZT0CJ6zB0QHd_Ts0f6fE0Ko0`).then((data) => {
       setMobile(data.lighthouseResult.audits.viewport.score);
-      console.log('mobile',data.lighthouseResult.audits.viewport.score);
-      console.log('speed', data.lighthouseResult.audits['speed-index'].score);
-      console.log('http', data.lighthouseResult.audits['network-requests'].details.items.length);
       setPageSpeed(data.lighthouseResult.audits['speed-index'].score);
       setHttpRequests(data.lighthouseResult.audits['network-requests'].details.items.length);
     })
   });
 
   React.useEffect(() => {
-      calculateScore();
+    calculateScore();
 
-      let timeout: any;
-      if (spinnerLoading) {
-        timeout = setTimeout(() => {
-          setSpinnerLoading(false)
-        }, 12000);
-      }
-      return () => clearTimeout(timeout);
+    let timeout: any;
+    if (spinnerLoading) {
+      timeout = setTimeout(() => {
+        setSpinnerLoading(false)
+      }, 12000);
+    }
+    return () => clearTimeout(timeout);
 
   }, [greenHosting, pageSpeed, mobile, httpRequests])
 
@@ -97,19 +100,27 @@ function App() {
     statisticValues = [
       {
         name: 'Green Hosting',
-        value: greenHosting ? 100 : 0
+        value: greenHosting ? 100 : 0,
+        content: 'Green Hosting is super! Pleas use it.'
+
       },
       {
         name: 'Page Speed',
-        value: pageSpeed * 100
+        value: pageSpeed * 100,
+        content: 'Green Hosting is super! Pleas use it.'
+
       },
       {
         name: 'HTTP Requests',
-        value: httpRequests <= 15 ? 100 : 0
+        value: httpRequests <= 15 ? 100 : 0,
+        content: 'Green Hosting is super! Pleas use it.'
+
       },
       {
         name: 'Responsiveness',
-        value: mobile * 100
+        value: mobile * 100,
+        content: 'Green Hosting is super! Pleas use it.'
+
       },
     ]
   }
@@ -120,12 +131,13 @@ function App() {
     // statisticValues.forEach((item) => {
     //   value += item.value;
     // })
-    console.log(greenHosting);
-    console.log(pageSpeed);
-    console.log(httpRequests);
-    console.log(mobile);
+    console.log('greenHosting', greenHosting);
+    console.log('pageSpeed', pageSpeed);
+    console.log('httpRequests', httpRequests);
+    console.log('mobile', mobile);
+    //TODO work on algorithm for parameters and push values to statisticValues
     const green = greenHosting ? 100 : 0;
-    let value = green + (pageSpeed*100) + httpRequests;
+    let value = green + (pageSpeed * 100) + httpRequests + (mobile * 100);
     setScoreValue(Math.round(value / 4));
   }
 
@@ -138,13 +150,14 @@ function App() {
         <img className="w-8 h-8 cursor-pointer" src={close} alt="close" onClick={() => window.close()}/>
       </header>
       {spinnerLoading ?
-        <div className="flex justify-center items-center h-full">
-          <ClipLoader color="#67837E" loading={spinnerLoading} size={100}/>
+        <div className="flex flex-col items-center h-full">
+          <ClipLoader color="#67837E" loading={spinnerLoading} size={130} speedMultiplier={0.8}/>
+          <div className="text-dark-green mt-20">Please wait...</div>
         </div>
         :
         <>
-          <div className=""><Score value={scoreValue}/></div>
-          <div className="h-auto">
+          <div><Score value={scoreValue}/></div>
+          <div className="h-250 overflow-y-auto">
             <Statistics values={statisticValues}/></div>
         </>
       }
