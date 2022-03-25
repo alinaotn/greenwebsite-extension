@@ -16,11 +16,6 @@ body {
     background-color: #ECEFF1;
 }
 
-code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
 .circular {
     transform: scale(2);
 }

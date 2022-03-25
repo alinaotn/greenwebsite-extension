@@ -152,7 +152,7 @@ function App() {
             <Statistics values={statisticValues}/></div>
         </>
       }
-      <div className="text-lg text-dark-green cursor-pointer">Learn more: www.greenwebsite.com</div>
+      <div className="text-lg text-dark-green cursor-pointer">Learn more: www.greenwebsite.info</div>
     </div>
   );
 }
