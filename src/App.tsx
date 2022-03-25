@@ -54,6 +54,7 @@ function App() {
   const [spinnerLoading, setSpinnerLoading] = React.useState(true);
   const [scoreValue, setScoreValue] = React.useState(0);
   const [scoreColor, setScoreColor] = React.useState('');
+  const [loadingTitle, setLoadingTitle] = React.useState('Please wait...');
 
   const getBrowserTabs = () => {
     chrome.tabs && chrome.tabs.query({
@@ -91,18 +92,28 @@ function App() {
   });
 
   React.useEffect(() => {
+    timeLoadingTitle();
     calculateScore();
 
     let timeout: any;
     if (spinnerLoading) {
       timeout = setTimeout(() => {
         setSpinnerLoading(false)
-      }, 5000);
+      }, 10000);
     }
     return () => clearTimeout(timeout);
 
   }, [greenHosting, pageSpeed, mobile, httpRequests])
 
+  const timeLoadingTitle = () => {
+    let timeout: any;
+    if (spinnerLoading) {
+      timeout = setTimeout(() => {
+        setLoadingTitle('Almost there...')
+      }, 5000);
+    }
+    return () => clearTimeout(timeout);
+  }
 
   const calculateScore = () => {
     let value = calculateStatisticValue(greenHosting, pageSpeed, httpRequests, mobile, statisticValues);
@@ -132,7 +143,7 @@ function App() {
             color="#0C3B2E"
             secondaryColor="#F3F5F6"
           />
-          <div className="text-lg text-dark-green mt-20">Please wait...</div>
+          <div className="text-lg text-dark-green mt-20">{loadingTitle}</div>
         </div>
         :
         <>
