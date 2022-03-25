@@ -4,9 +4,12 @@ import './App.css';
 import {DOMMessage, DOMMessageResponse} from "./types";
 import {Score} from "./components/Score";
 import {Statistics} from "./components/Statistics";
-import {ClipLoader} from "react-spinners";
+import {calculateColor} from "./utils/calculateColor";
+import {calculateStatisticValue} from "./utils/calculateValues";
+import {Oval} from "react-loader-spinner";
 
 type StatisticValues = {
+  id: string;
   name: string;
   value: number;
   content: string;
@@ -14,22 +17,26 @@ type StatisticValues = {
 
 let statisticValues: StatisticValues[] = [
   {
+    id: 'green',
     name: 'Green Hosting',
     value: 0,
     content: 'Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. ',
   },
   {
+    id: 'speed',
     name: 'Page Speed',
     value: 0,
     content: 'Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. ',
 
   },
   {
+    id: 'http',
     name: 'HTTP Requests',
     value: 0,
     content: 'Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. '
   },
   {
+    id: 'mobile',
     name: 'Responsiveness',
     value: 0,
     content: 'Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. '
@@ -46,6 +53,7 @@ function App() {
   const [httpRequests, setHttpRequests] = React.useState(0);
   const [spinnerLoading, setSpinnerLoading] = React.useState(true);
   const [scoreValue, setScoreValue] = React.useState(0);
+  const [scoreColor, setScoreColor] = React.useState('');
 
   const getBrowserTabs = () => {
     chrome.tabs && chrome.tabs.query({
@@ -89,56 +97,21 @@ function App() {
     if (spinnerLoading) {
       timeout = setTimeout(() => {
         setSpinnerLoading(false)
-      }, 12000);
+      }, 5000);
     }
     return () => clearTimeout(timeout);
 
   }, [greenHosting, pageSpeed, mobile, httpRequests])
 
-  const convertStatisticValues = () => {
-//TODO algorithm to calculate values
-    statisticValues = [
-      {
-        name: 'Green Hosting',
-        value: greenHosting ? 100 : 0,
-        content: 'Green Hosting is super! Pleas use it.'
-
-      },
-      {
-        name: 'Page Speed',
-        value: pageSpeed * 100,
-        content: 'Green Hosting is super! Pleas use it.'
-
-      },
-      {
-        name: 'HTTP Requests',
-        value: httpRequests <= 15 ? 100 : 0,
-        content: 'Green Hosting is super! Pleas use it.'
-
-      },
-      {
-        name: 'Responsiveness',
-        value: mobile * 100,
-        content: 'Green Hosting is super! Pleas use it.'
-
-      },
-    ]
-  }
 
   const calculateScore = () => {
-    // let value = 0;
-    // console.log(statisticValues);
-    // statisticValues.forEach((item) => {
-    //   value += item.value;
-    // })
-    console.log('greenHosting', greenHosting);
-    console.log('pageSpeed', pageSpeed);
-    console.log('httpRequests', httpRequests);
-    console.log('mobile', mobile);
-    //TODO work on algorithm for parameters and push values to statisticValues
-    const green = greenHosting ? 100 : 0;
-    let value = green + (pageSpeed * 100) + httpRequests + (mobile * 100);
-    setScoreValue(Math.round(value / 4));
+    let value = calculateStatisticValue(greenHosting, pageSpeed, httpRequests, mobile, statisticValues);
+    setScoreValue(value);
+
+    const scoreHex = calculateColor(scoreValue);
+    if (scoreHex) {
+      setScoreColor(scoreHex);
+    }
   }
 
   return (
@@ -151,17 +124,24 @@ function App() {
       </header>
       {spinnerLoading ?
         <div className="flex flex-col items-center h-full">
-          <ClipLoader color="#67837E" loading={spinnerLoading} size={130} speedMultiplier={0.8}/>
-          <div className="text-dark-green mt-20">Please wait...</div>
+          <Oval
+            ariaLabel="loading-indicator"
+            height={135}
+            width={135}
+            strokeWidth={2}
+            color="#0C3B2E"
+            secondaryColor="#F3F5F6"
+          />
+          <div className="text-lg text-dark-green mt-20">Please wait...</div>
         </div>
         :
         <>
-          <div><Score value={scoreValue}/></div>
+          <div><Score value={scoreValue} color={scoreColor}/></div>
           <div className="h-250 overflow-y-auto">
             <Statistics values={statisticValues}/></div>
         </>
       }
-      <div className="text-dark-green">Learn more: www.greenwebsite.com</div>
+      <div className="text-lg text-dark-green cursor-pointer">Learn more: www.greenwebsite.com</div>
     </div>
   );
 }

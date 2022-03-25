@@ -20,3 +20,50 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.circular {
+    transform: scale(2);
+}
+
+.inner {
+    z-index: 6;
+    top: 50%;
+    left: 50%;
+    height: 90px;
+    width: 90px;
+    margin: -45px 0 0 -45px;
+    border-radius: 100%;
+}
+
+.number {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+.bar {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    -webkit-border-radius: 100%;
+    clip: rect(0px, 100px, 100px, 50px);
+}
+
+.circle .bar .progress {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    -webkit-border-radius: 100%;
+    clip: rect(0px, 50px, 100px, 0px);
+}
+
+.circle .left .progress {
+    z-index: 1;
+}
+
+.circle .right {
+    transform: rotate(180deg);
+    z-index: 3;
+}

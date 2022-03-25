@@ -2,6 +2,7 @@ import React, {FC, ReactElement } from 'react';
 import {Badge} from "./Badge";
 
 type StatisticValues = {
+  id: string;
   name: string;
   value: number;
   content: string;

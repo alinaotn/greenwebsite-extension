@@ -1,25 +1,58 @@
 import React, {FC, ReactElement} from 'react';
+import styled, {keyframes} from 'styled-components';
 
 interface ScoreProps {
   value: number;
-  max?: number;
+  color?: string;
 }
 
-export const Score: FC<ScoreProps> = ({value, max = 100}): ReactElement => {
-  const [linearGradient, setLinearGradient] = React.useState('');
-  //TODO add color check via value
-  //TODO understand LinearGradient and calculate percent via value
+const rotate = (degree: number) => keyframes`
+  100% {
+    transform: rotate(${degree}deg);
+  }
+`;
+
+interface BarLeftProps {
+  degree: number;
+}
+
+const BarLeft = styled.div<BarLeftProps>`
+  animation: ${props => rotate(props.degree)} 1s linear both;
+`;
+
+const BarRight = styled.div<BarLeftProps>`
+  animation: ${props => rotate(props.degree)} 1s linear both;
+  animation-delay: 1s;
+`;
+
+export const Score: FC<ScoreProps> = ({value, color}): ReactElement => {
+  const [degreeLeft, setDegreeLeft] = React.useState(0);
+  const [degreeRight, setDegreeRight] = React.useState(0);
 
   React.useEffect(() => {
-    setLinearGradient('linear-gradient(270deg, #0C3B2E 50%, #F3F5F6 50%), linear-gradient(0deg, #0C3B2E 50%, #F3F5F6 50%)')
-  }, [])
+    if (value <= 50) {
+      setDegreeLeft(360 * (value / 100));
+      setDegreeRight(0);
+    } else {
+      setDegreeLeft(360 * (50 / 100));
+      setDegreeRight(360 * ((value - 50) / 100));
+    }
+  }, [value])
 
   return (
-    <div className={`w-135 h-135 rounded-50 flex flex-col justify-center items-center mx-auto `} style={{background: `${linearGradient}`}}>
-      <div
-        className="w-130 h-130 bg-white overflow-hidden rounded-50 flex flex-col justify-center items-center">
-        <span className="text-8xl font-bold text-red">{value}</span>
+    <div className={`w-135 h-135 rounded-50 flex flex-col justify-center items-center mx-auto`}>
+      <div className={`w-100 h-100 relative scale-150`}>
+        <div className="inner absolute bg-white"/>
+        <div className="circle">
+          <div className="bar left bg-offwhite">
+            <BarLeft className={`progress ${color}`} degree={degreeLeft}/>
+          </div>
+          <div className="bar right bg-offwhite">
+            <BarRight className={`progress ${color}`} degree={degreeRight}/>
+          </div>
+        </div>
       </div>
+      <span className="text-7xl font-bold text-dark-green absolute">{value}</span>
     </div>
   );
 }
