@@ -18,20 +18,31 @@ module.exports = {
         borderRadius: {
             'medium': '10px',
             'large': '25px',
+            'round': '50%',
         },
         extend: {
             backgroundImage: {
                 'hero-pattern': "url('/public/background.svg')",
             },
+            borderColor: {
+                'green': '#67837E',
+                'red': '#D09887',
+                'yellow': '#F0C97F',
+            },
             width: {
+                '17': '17px',
                 '100': '100px',
                 '130': '130px',
                 '135': '135px',
+                '160': '160px',
+                '180': '180px',
+                '190': '190px',
                 '320': '320px',
                 '400': '400px',
                 '450': '450px',
             },
             height: {
+                '17': '17px',
                 '100': '100px',
                 '130': '130px',
                 '135': '135px',

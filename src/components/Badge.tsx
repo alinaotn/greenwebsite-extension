@@ -1,9 +1,7 @@
 import React, {FC, ReactElement} from 'react';
-import plus from "../icons/plus.svg";
-import like from "../icons/like.svg";
-import dislike from "../icons/dislike.svg";
-import minus from "../icons/minus.svg";
 import styled from 'styled-components';
+import info from "../icons/info.svg";
+import minimize from "../icons/minimize.svg";
 
 interface BadgeProps {
   value: number;
@@ -38,36 +36,38 @@ const BadgeContent = styled.div<BadgeBodyProps>`
 `;
 
 export const Badge: FC<BadgeProps> = ({value, name, content}): ReactElement => {
-  const [img, setImg] = React.useState(like);
+  const [color, setColor] = React.useState('');
   const [expanded, setExpanded] = React.useState(false);
 
   React.useEffect(() => {
     if (value < 30) {
-      setImg(dislike)
+      setColor('border-red');
     } else if (value >= 30 && value < 60) {
-      setImg(dislike)
+      setColor('border-yellow');
     } else if (value >= 60) {
-      setImg(like)
+      setColor('border-green');
     }
   }, [value])
 
   return (
     <div className={`bg-mint flex flex-col rounded-medium w-400 cursor-pointer`}
          onClick={() => setExpanded(!expanded)}>
-      <div className={` flex items-center h-11 `}>
-        <div className="ml-4 mr-4">
-          {expanded ? <img className="w-8 h-8 " src={minus} alt="minus"/> :
-            <img className="w-8 h-8 " src={plus} alt="plus"/>}
+      <div className={`flex items-center h-11 justify-between`}>
+        <div className="flex items-center">
+          {expanded ? <BadgeContent expanded={expanded}
+                                    className={`text-dark-green font-medium text-lg ml-4 mr-2`}>{name}</BadgeContent> :
+            <span className={`text-dark-green text-lg ml-4 mr-2`}>{name}</span>}
+          <div>
+            {expanded ? <img className="w-5 h-5 " src={minimize} alt="minimize"/> :
+              <img className="w-5 h-5 " src={info} alt="info"/>}
+          </div>
         </div>
-        {expanded ? <BadgeContent expanded={expanded}
-                                  className={`text-dark-green font-medium text-lg w-320`}>{name}</BadgeContent> :
-          <span className={`text-dark-green text-lg w-320`}>{name}</span>}
         <div className="ml-4 mr-4">
-          <img className="w-8 h-8" src={img} alt="like"/>
+          <div className={`border-[3px] bg-transparent rounded-round ${color} w-17 h-17`}/>
         </div>
       </div>
       <BadgeBody expanded={expanded}>
-        <div className={`text-dark-green text-sm w-320 ml-[60px] pb-3 overflow-hidden`}>{content}</div>
+        <div className={`text-dark-green text-sm w-320 ml-4 pb-3 overflow-hidden`}>{content}</div>
       </BadgeBody>
     </div>
   );

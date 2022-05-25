@@ -16,6 +16,8 @@ export const calculateStatisticValue = (greenHosting: boolean, pageSpeed: number
   }
   if (httpRequests <= 15) {
     httpRequests = 100
+  } else if (httpRequests >= 15 && httpRequests <= 30) {
+    httpRequests = 50
   } else {
     httpRequests = 0;
   }
