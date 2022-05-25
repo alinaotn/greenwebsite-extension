@@ -128,7 +128,7 @@ function App() {
   }
 
   return (
-    <div className="bg-hero-pattern px-6 py-5 overflow-hidden flex flex-col justify-center w-450 h-550 gap-7">
+    <div className="bg-hero-pattern px-6 py-5 overflow-hidden flex flex-col justify-center w-450 h-550 gap-5">
       <header className="flex flex-row justify-between items-center h-auto">
         <p className=" text-2xl text-dark-green font-semibold px-1.5 text-center">
           How green is this Website?
@@ -152,14 +152,14 @@ function App() {
           <div onMouseEnter={() => setShowScoreTooltip(true)} onMouseLeave={() => setShowScoreTooltip(false)}><Score
             value={scoreValue} color={scoreColor}/> {showScoreTooltip && <Tooltip
               text="This score tells you how sustainable the website is, that you are currently visiting"
-              arrowPosition="left" top="top-[7%]" left="left-[32%]"/>}
+              arrowPosition="left" top="top-[6%]" left="left-[32%]" maxWidth='max-w-[13%]'/>}
           </div>
-          <div className="h-250 overflow-y-auto">
+          <div className="h-270 overflow-y-auto">
             <Statistics values={statisticValues}/></div>
         </>
       }
 
-      <div className="text-lg text-dark-green cursor-pointer">Learn more: www.greenwebsite.info</div>
+      <div className="text-lg text-dark-green cursor-pointer">Learn more: <span className="hover:underline">www.greenwebsite.info</span></div>
     </div>
   );
 }

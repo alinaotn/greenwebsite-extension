@@ -8,6 +8,7 @@ export interface Props {
   right?: string;
   bottom?: string;
   left?: string;
+  maxWidth?: string
 }
 
 export default function Tooltip({
@@ -19,14 +20,15 @@ export default function Tooltip({
                                   top = "top-[0]",
                                   right = "right-[0]",
                                   bottom = "bottom-[0]",
-                                  left = "left-[0]"
+                                  left = "left-[0]",
+                                  maxWidth
                                 }: Props) {
   return (
     <div
-      className={` ${backgroundColor} p-2 w-fit h-fit flex items-center justify-center rounded-medium absolute max-w-[13%] ${top} ${right} ${bottom} ${left}`}>
+      className={` ${backgroundColor} p-2 w-fit h-fit flex items-center justify-center rounded-medium absolute ${maxWidth} ${top} ${right} ${bottom} ${left}`}>
       <p className={`${textColor} leading-none text-gray-800 text-lg`}>{text}</p>
       {arrowPosition === 'bottom' ?
-        <svg className="absolute z-10  bottom-[-10px] " width={16} height={10} viewBox="0 0 16 10" fill="none"
+        <svg className="absolute z-10 right-[10%] bottom-[-10px] " width={16} height={10} viewBox="0 0 16 10" fill="none"
              xmlns="http://www.w3.org/2000/svg">
           <path d="M8 10L0 0L16 1.41326e-06L8 10Z" fill={hexColor}/>
         </svg>
