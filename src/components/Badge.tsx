@@ -41,11 +41,11 @@ export const Badge: FC<BadgeProps> = ({value, name, content}): ReactElement => {
 
   React.useEffect(() => {
     if (value < 30) {
-      setColor('border-red');
+      setColor('text-ultra-red');
     } else if (value >= 30 && value < 60) {
-      setColor('border-yellow');
+      setColor('text-yellow');
     } else if (value >= 60) {
-      setColor('border-green');
+      setColor('text-ultra-green');
     }
   }, [value])
 
@@ -63,7 +63,7 @@ export const Badge: FC<BadgeProps> = ({value, name, content}): ReactElement => {
           </div>
         </div>
         <div className="ml-4 mr-4">
-          <div className={`border-[3px] bg-transparent rounded-round ${color} w-17 h-17`}/>
+          <div className={` bg-white rounded-round ${color} w-8 h-8 flex items-center justify-center font-bold`}>100</div>
         </div>
       </div>
       <BadgeBody expanded={expanded}>

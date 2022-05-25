@@ -14,6 +14,8 @@ module.exports = {
             'yellow': '#F0C97F',
             'dark-green': '#0C3B2E',
             'mint': '#E2F0DA',
+            'ultra-red': '#F26E46',
+            'ultra-green': '#82B782',
         },
         borderRadius: {
             'medium': '10px',

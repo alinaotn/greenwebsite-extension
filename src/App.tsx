@@ -7,6 +7,7 @@ import {Statistics} from "./components/Statistics";
 import {calculateColor} from "./utils/calculateColor";
 import {calculateStatisticValue} from "./utils/calculateValues";
 import {Oval} from "react-loader-spinner";
+import Tooltip from "./components/Tooltip";
 
 type StatisticValues = {
   id: string;
@@ -26,7 +27,7 @@ let statisticValues: StatisticValues[] = [
     id: 'speed',
     name: 'Page Speed',
     value: 0,
-    content: 'Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. ',
+    content: 'The Page Speed parameter measures how quickly content is visually displayed during page load. Designing for fast performance does often lead to reduced data transfer and emissions. The smaller the page weight the better the score.',
 
   },
   {
@@ -55,6 +56,7 @@ function App() {
   const [scoreValue, setScoreValue] = React.useState(0);
   const [scoreColor, setScoreColor] = React.useState('');
   const [loadingTitle, setLoadingTitle] = React.useState('Please wait...');
+  const [showScoreTooltip, setShowScoreTooltip] = React.useState(false);
 
   const getBrowserTabs = () => {
     chrome.tabs && chrome.tabs.query({
@@ -147,11 +149,16 @@ function App() {
         </div>
         :
         <>
-          <div><Score value={scoreValue} color={scoreColor}/></div>
+          <div onMouseEnter={() => setShowScoreTooltip(true)} onMouseLeave={() => setShowScoreTooltip(false)}><Score
+            value={scoreValue} color={scoreColor}/> {showScoreTooltip && <Tooltip
+              text="This score tells you how sustainable the website is, that you are currently visiting"
+              arrowPosition="left" top="top-[7%]" left="left-[32%]"/>}
+          </div>
           <div className="h-250 overflow-y-auto">
             <Statistics values={statisticValues}/></div>
         </>
       }
+
       <div className="text-lg text-dark-green cursor-pointer">Learn more: www.greenwebsite.info</div>
     </div>
   );

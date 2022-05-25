@@ -40,7 +40,7 @@ export const Score: FC<ScoreProps> = ({value, color}): ReactElement => {
   }, [value])
 
   return (
-    <div className={`w-130 h-130 rounded-50 flex flex-col justify-center items-center mx-auto`}>
+    <div className={`w-130 h-130 rounded-50 flex flex-col justify-center items-center mx-auto relative`}>
       <div className={`w-100 h-100 relative scale-150`}>
         <div className="inner absolute bg-white"/>
         <div className="circle">
