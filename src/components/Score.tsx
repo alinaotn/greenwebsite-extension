@@ -41,9 +41,9 @@ export const Score: FC<ScoreProps> = ({value, color}): ReactElement => {
 
   return (
     <div className={`w-120 h-120 rounded-50 flex flex-col justify-center items-center mx-auto relative mt-[15px]`}>
-      <div className={`w-100 h-100 relative scale-150`}>
+      <div className={`w-100 h-100 relative scale-150 cursor-pointer`}>
         <div className="inner absolute bg-white"/>
-        <div className="circle">
+        <div className="circle cursor-pointer">
           <div className="bar left bg-offwhite">
             <BarLeft className={`progress ${color}`} degree={degreeLeft}/>
           </div>
@@ -52,7 +52,7 @@ export const Score: FC<ScoreProps> = ({value, color}): ReactElement => {
           </div>
         </div>
       </div>
-      <span className="text-7xl font-bold text-dark-green absolute">{value}</span>
+      <span className="text-7xl font-bold text-dark-green absolute cursor-pointer">{value}</span>
     </div>
   );
 }

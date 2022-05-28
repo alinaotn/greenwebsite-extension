@@ -21,7 +21,7 @@ let statisticValues: StatisticValues[] = [
     id: 'green',
     name: 'Green Hosting',
     value: 0,
-    content: 'Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. ',
+    content: 'A lot of energy is used by websites in the data centre and in the transmission of data to and from the data centre. Careful selection of web hosting services can therefore have a big impact on energy efficiency and web page speeds. A score of 100 means that the website is hosted on a green server.',
   },
   {
     id: 'speed',
@@ -34,13 +34,13 @@ let statisticValues: StatisticValues[] = [
     id: 'http',
     name: 'HTTP Requests',
     value: 0,
-    content: 'Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. '
+    content: 'The internet boasts a vast array of resources hosted on different servers. For you to access these resources, your browser needs to be able to send http requests to the servers and display the resources for you. A score of 0 doesn`t mean that there are 0 requests.The fewer requests made, the less data transfer takes place and the higher the score.'
   },
   {
     id: 'mobile',
     name: 'Responsiveness',
     value: 0,
-    content: 'Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. Green Hosting is super! Pleas use it. '
+    content: 'Is the page optimized for smartphone use? Optimized pages, do not need to load oversized media on mobile devices. They are programmed so that desktop styles do not need to be overwritten, but are designed directly for the smallest device. The higher the score, the more emphasis was placed on responsive design.'
   },
 ]
 
@@ -152,7 +152,7 @@ function App() {
           <div onMouseEnter={() => setShowScoreTooltip(true)} onMouseLeave={() => setShowScoreTooltip(false)}><Score
             value={scoreValue} color={scoreColor}/> {showScoreTooltip && <Tooltip
               text="This score tells you how sustainable the website is, that you are currently visiting"
-              arrowPosition="left" top="top-[6%]" left="left-[32%]" maxWidth='max-w-[13%]'/>}
+              arrowPosition="left" top="top-[12%]" left="left-[70%]" maxWidth='max-w-[28%]'/>}
           </div>
           <div className="h-270 overflow-y-auto">
             <Statistics values={statisticValues}/></div>

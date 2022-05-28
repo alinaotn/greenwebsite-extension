@@ -23,7 +23,7 @@ const BadgeBody = styled.div<BadgeBodyProps>`
   visibility: hidden;
 
   ${({expanded}) =>
-          expanded ? `transition-timing-function: ease-in;max-height: 128px; opacity: 1; visibility: visible` : ''};
+          expanded ? `transition-timing-function: ease-in;max-height: 170px; opacity: 1; visibility: visible` : ''};
 `;
 
 const BadgeContent = styled.div<BadgeBodyProps>`
@@ -45,14 +45,13 @@ export const Badge: FC<BadgeProps> = ({value, name, content}): ReactElement => {
   React.useEffect(() => {
     if (value < 30) {
       setColor('text-ultra-red');
-      setTooltipText('This must be improved.....')
+      setTooltipText('This must be improved....')
     } else if (value >= 30 && value < 60) {
       setColor('text-yellow');
-      setTooltipText('Oh, this could be better.....')
+      setTooltipText('Oh, this could be better....')
     } else if (value >= 60) {
       setColor('text-ultra-green');
-      setTooltipText('Yay, you are good to surf!')
-
+      setTooltipText('Yay, this is a good score!')
     }
   }, [value])
 
@@ -61,7 +60,7 @@ export const Badge: FC<BadgeProps> = ({value, name, content}): ReactElement => {
          onClick={() => setExpanded(!expanded)}>
       {showTooltip && <Tooltip
           text={tooltipText}
-          arrowPosition="bottom" top="top-[-70%]" left="left-[45%]" textColor="text-white" hexColor="#0C3B2E" backgroundColor="bg-dark-green"/>}
+          arrowPosition="bottom" top="top-[-70%]" left="left-[46%]" textColor="text-white" hexColor="#0C3B2E" backgroundColor="bg-dark-green"/>}
       <div className={`flex items-center h-11 justify-between`}>
         <div className="flex items-center">
           {expanded ? <BadgeContent expanded={expanded}
