@@ -34,7 +34,7 @@ let statisticValues: StatisticValues[] = [
     id: 'http',
     name: 'HTTP Requests',
     value: 0,
-    content: 'The internet boasts a vast array of resources hosted on different servers. For you to access these resources, your browser needs to be able to send http requests to the servers and display the resources for you. A score of 0 doesn`t mean that there are 0 requests.The fewer requests made, the less data transfer takes place and the higher the score.'
+    content: 'The internet boasts a vast array of resources hosted on different servers. For you to access these resources, your browser needs to be able to send HTTP requests to the servers and display the resources for you. A score of 0 doesn`t mean that there are 0 requests.The fewer requests made, the less data transfer takes place and the higher the score.'
   },
   {
     id: 'mobile',
@@ -101,7 +101,7 @@ function App() {
     if (spinnerLoading) {
       timeout = setTimeout(() => {
         setSpinnerLoading(false)
-      }, 10000);
+      }, 12000);
     }
     return () => clearTimeout(timeout);
 
@@ -159,7 +159,7 @@ function App() {
         </>
       }
 
-      <div className="text-lg text-dark-green cursor-pointer">Learn more: <span className="hover:underline">www.greenwebsite.info</span></div>
+      <div className="text-lg text-dark-green cursor-pointer">Learn more: <a href="http://greenwebsite.info/extension"  target="_blank" className="hover:underline">www.greenwebsite.info</a></div>
     </div>
   );
 }
