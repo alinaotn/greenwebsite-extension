@@ -2,10 +2,16 @@
 
 This is a Chrome extension bootstrapped with [Create React App](https://github.com/facebook/create-react-app). The
 extension analyzes the sustainability of the website that is opened in the current tab. For the analysis multiple
-parameters play action, e.g. the selected hosting provider or the page weight. This extension is part of my master
-thesis.
+parameters play action, e.g. the selected hosting provider or the page weight. This extension is part of my master's thesis, which I did together with the Düsseldorf University of Applied Sciences [Hochschule Düsseldorf](https://hs-duesseldorf.de/).
+
+This is what the extension looks like:
+
+![Screens](public/screens.png)
+
+If you want to learn more visit [greenwebsite.info/extension](https://greenwebsite.info/extension).
 
 The general "Create React App" scripts are available, but for running the extension you'll only need `npm run build`.
+
 ## Available Scripts
 
 In the project directory, you can run:
